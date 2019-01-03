@@ -114,7 +114,7 @@ $calendar-shadow: rgba($calendar-color, 0.25) 0 0 1em !default;
     text-align: center;
     letter-spacing: initial;
 
-    &.is-passive {
+    &.is-passive, .enabledPassiveDay{
         cursor: normal;
         opacity: 0.4;
     }

@@ -37,7 +37,7 @@ class Calendar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate } = props;
+    const { format, range, theme, offset, firstDayOfWeek, locale, shownDate} = props;
 
     if(locale) {
       moment.locale(locale);
@@ -164,7 +164,7 @@ class Calendar extends Component {
     // TODO: Split this logic into smaller chunks
     const { styles }               = this;
 
-    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays } = this.props;
+    const { range, minDate, maxDate, format, onlyClasses, disableDaysBeforeToday, specialDays, enablePassiveDay } = this.props;
 
     const shownDate                = this.getShownDate();
     const { date, firstDayOfWeek } = this.state;
@@ -236,6 +236,7 @@ class Calendar extends Component {
           isToday={ isToday }
           key={ index }
           isPassive = { isPassive || isOutsideMinMax }
+          enablePassiveDay = { enablePassiveDay }
           onlyClasses = { onlyClasses }
           classNames = { classes }
         />
@@ -260,41 +261,43 @@ class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
-  format      : 'DD/MM/YYYY',
-  theme       : {},
-  showMonthArrow: true,
+  format                : 'DD/MM/YYYY',
+  theme                 : {},
+  showMonthArrow        : true,
   disableDaysBeforeToday: false,
-  onlyClasses : false,
-  classNames  : {},
-  specialDays : [],
+  onlyClasses           : false,
+  classNames            : {},
+  specialDays           : [],
+  enablePassiveDay      : false,
 }
 
 Calendar.propTypes = {
   showMonthArrow : PropTypes.bool,
   disableDaysBeforeToday : PropTypes.bool,
-  lang           : PropTypes.string,
-  sets           : PropTypes.string,
-  range          : PropTypes.shape({
-    startDate    : PropTypes.object,
-    endDate      : PropTypes.object
+  lang              : PropTypes.string,
+  sets              : PropTypes.string,
+  range             : PropTypes.shape({
+    startDate       : PropTypes.object,
+    endDate         : PropTypes.object
   }),
-  minDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  maxDate        : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
-  date           : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
-  format         : PropTypes.string.isRequired,
-  firstDayOfWeek : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  onChange       : PropTypes.func,
-  onInit         : PropTypes.func,
-  link           : PropTypes.oneOfType([PropTypes.shape({
-    startDate    : PropTypes.object,
-    endDate      : PropTypes.object,
+  minDate           : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  maxDate           : PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  date              : PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.func]),
+  format            : PropTypes.string.isRequired,
+  firstDayOfWeek    : PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onChange          : PropTypes.func,
+  onInit            : PropTypes.func,
+  link              : PropTypes.oneOfType([PropTypes.shape({
+    startDate       : PropTypes.object,
+    endDate         : PropTypes.object,
   }), PropTypes.bool]),
-  linkCB         : PropTypes.func,
-  theme          : PropTypes.object,
-  onlyClasses    : PropTypes.bool,
-  specialDays    : PropTypes.array,
-  classNames     : PropTypes.object,
-  locale         : PropTypes.string
+  linkCB            : PropTypes.func,
+  theme             : PropTypes.object,
+  onlyClasses       : PropTypes.bool,
+  specialDays       : PropTypes.array,
+  classNames        : PropTypes.object,
+  locale            : PropTypes.string,
+  enablePassiveDay  : PropTypes.bool,
 }
 
 export default Calendar;

@@ -44,7 +44,7 @@ class DayCell extends Component {
   handleSelect(event) {
     event.preventDefault();
 
-    if (this.props.isPassive) return null;
+    if (this.props.isPassive && !this.props.enablePassiveDay) return null;
 
     this.props.onSelect(this.props.dayMoment);
   }
@@ -80,18 +80,19 @@ class DayCell extends Component {
   }
 
   getClassNames(classes) {
-    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay } = this.props;
+    const { isSelected, isInRange, isPassive, isStartEdge, isEndEdge, isToday, isSunday, isSpecialDay, enablePassiveDay } = this.props;
 
     return classnames({
       [classes.day]       : true,
       [classes.dayActive] : isSelected,
-      [classes.dayPassive]: isPassive,
+      [classes.dayPassive]: isPassive && !enablePassiveDay,
       [classes.dayInRange]: isInRange,
       [classes.dayStartEdge] : isStartEdge,
       [classes.dayEndEdge] : isEndEdge,
       [classes.dayToday] : isToday,
       [classes.daySunday]: isSunday,
       [classes.daySpecialDay]: isSpecialDay,
+      [classes.enabledPassiveDay]: isPassive && enablePassiveDay,
     });
 
   }
@@ -132,17 +133,18 @@ DayCell.defaultProps = {
 }
 
 DayCell.propTypes = {
-  dayMoment   : PropTypes.object.isRequired,
-  onSelect    : PropTypes.func,
-  isSelected  : PropTypes.bool,
-  isInRange   : PropTypes.bool,
-  isPassive   : PropTypes.bool,
-  theme       : PropTypes.shape({
-    Day       : PropTypes.object.isRequired
+  dayMoment         : PropTypes.object.isRequired,
+  onSelect          : PropTypes.func,
+  isSelected        : PropTypes.bool,
+  isInRange         : PropTypes.bool,
+  isPassive         : PropTypes.bool,
+  theme             : PropTypes.shape({
+    Day             : PropTypes.object.isRequired
   }).isRequired,
-  onlyClasses : PropTypes.bool,
-  isSpecialDay: PropTypes.bool,
-  classNames  : PropTypes.object
+  onlyClasses       : PropTypes.bool,
+  isSpecialDay      : PropTypes.bool,
+  classNames        : PropTypes.object,
+  enablePassiveDay  : PropTypes.bool,
 }
 
 export default DayCell;
